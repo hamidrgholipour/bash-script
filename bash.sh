@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# read log file and print based stopped time
 log_file="app.log"
 
 stopped_line=$(grep "Total time for which application threads were stopped" "$log_file")
