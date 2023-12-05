@@ -10,7 +10,7 @@
 sudo swapoff -a
 (crontab -l 2>/dev/null; echo "@reboot /sbin/swapoff -a") | crontab - || true
 
-sudo apt-get update -y
+sudo yum update -y
 
 # container runtime 
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
@@ -41,12 +41,9 @@ sudo setenforce 0
 sudo sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 
 # Install containerd
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 sudo yum update 
-sudo yum install -y containerd.io
+sudo yum install -y containerd
 echo "containerd runtime installed susccessfully"
 
 # Create a containerd configuration file
@@ -56,7 +53,7 @@ sudo containerd config default | sudo tee /etc/containerd/config.toml
 
 # Install kubelet, kubectl and Kubeadm
 
-sudo yum install -y apt-transport-https ca-certificates curl
+sudo yum install -y ca-certificates curl
 
 # This overwrites any existing configuration in /etc/yum.repos.d/kubernetes.repo
 cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
