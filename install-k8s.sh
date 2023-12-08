@@ -63,6 +63,6 @@ sudo systemctl enable kubelet.service
 #sudo kubeadm init
 #kubeadm init --ignore-preflight-errors=all
 #kubeadm token create --print-join-command
-##k8s config file : /etc/kubernetes/admin.conf
+##k8s config file : export KUBECONFIG=/etc/kubernetes/admin.conf
 #curl https://raw.githubusercontent.com/projectcalico/calico/v3.26.4/manifests/calico.yaml -O
 #sudo kubectl apply -f calico.yaml
